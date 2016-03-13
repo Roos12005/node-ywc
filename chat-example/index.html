@@ -19,8 +19,21 @@
       <button>Send</button><input id="m" autocomplete="off" autofocus />
     </form>
     <script src="/jquery.js"></script>
+    <script src="/socket.io.js"></script>
 
     <script>
+        var socket = io()
+
+        $('form').submit(function() {
+          var message = $('#m').val();
+          socket.emit('chat message', message);
+          $('#m').val('')
+          return false;
+        })
+
+        socket.on('update message', function (msg){
+          $('#messages').append( $('<li>').text(msg) )
+        })
 
     </script>
   </body>
